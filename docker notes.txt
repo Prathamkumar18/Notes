@@ -1,0 +1,119 @@
+📌Docker allows the application to develop, ship & run in isolated environment(within containers) where every container will share same OS unlike VMs.
+Hence it solves the problem of dependency management(it work on my machine), code migration, scalable, portable, isolation,resource efficiency.
+
+📌Three parts-
+1)Runtime: to start and stop container.
+ a)Runc- Low level container runtime to create and run containers.
+ b)continerd- High level container runtime to manage the entire lifecycle of container like creating,running,deleting, and networking.
+
+2)Engine:
+ a)Docker Daemon-It listens the Docker API req. and manages lifecycle.
+ b)Docker client-It is CLI tool that allows user to interact with container,images,networks and docker resources.
+
+3)Orchaestration:Process of managing, deploying, load balancing and scaling multiple docker containers across a cluster of machines. Popular tools are Docker Swarm(built-in),kubernetes
+
+📌
+.A Dockerfile is a text file that contains the instructions needed to build a Docker image(class) and in turn that can then be used to run containers(obj).
+.A .dockerignore file can be used to ignore files while creating imgs
+.Docker Hub registry is a cloud-based repository for Docker images. It is used for sharing and storing Docker images.
+.An image is a static, immutable blueprint for creating containers, while a container is a dynamic, running instance of an image. Images are used for building and sharing applications, while containers are used for running and managing applications.
+.For random port use 0. It will help in solving the conflict of the port.
+.Docker Compose file is a YAML file that defines and runs multi-container Docker applications.(docker-compose.yaml)
+.A Dockerfile is used to build a single Docker image, whereas a Docker Compose file is used to define and run multiple Docker containers that interact with each other.
+.Files related to docker are stored in /var/lib/docker
+
+📌Docker Commands:
+.docker run img_name:version - to pull image and run
+.docker pull img_name:version - to pull image and not run
+.docker ps - to list all running containers
+.docker ps -a -to list all containers
+.docker stop container_name - to stop the container
+.docker stop $(docker ps -a -q) - to stop all the containers
+.docker rm container_name - to remove the container
+.docker rm $(docker ps -a -q) -to remove all the containers
+.docker container pause <container_id> - to pause running container
+.docker container unpause <container_id> - to unpause container
+.docker images - to list all images
+.docker rmi img_name - to remove the image
+.docker rmi $(docker images -a -q) - to remove all the images
+.docker image history - history of image.
+.docker run -d container_name - to run in detach mode (background)
+.docker attach container_name or container_id - to attach
+.docker run --name new_name old_name - to run container with new name
+.docker run -it img_name - to run in interactive way
+.docker inspect container_name/container_id - to see details of container
+.docker run img_name cat /etc/*release* - to check the details of the image
+.docker logs container_id/container_name - to see logs
+.docker run -it -p <host_port>:<container_port> image-name -(host_port -my & container_port - web server)eg.docker run -p 8080:3306 mysql (so we can run multiple instances by changing the host_port).
+.docker run -e key=value -e key=value img_name - env variable
+.docker system prune - to remove all stopped container and unused images.
+.docker build -t img_name:tag . - to build the docker image
+.docker push img_name - to push the docker image to docker hub repository
+.docker login - for authentication
+.docker compose up - for running the docker compose file services
+.docker compose down - for stopping the docker compose file services
+.docker stats - It provides information about CPU, memory, network, and disk I/O usage of all running containers.
+.docker run --cpus=.5 container_name - the container is not allowed to use > 50% of the cpu at any pt in time.
+.docker run --memory=100m container_name - the container is not allwoed to use >100mb memory.
+.docker system df - information about Docker's disk usage.
+.docker network ls - to list all network drivers.
+.docker network create -d --driver=driver_type --subnet=subnet --gateway=gateway ntw_name - to create a custom network. (driver type- host/none/bridge)
+.docker events - to know about the various events
+
+
+📌Dockerfile example for nodejs app:
+FROM base_img
+COPY src dest
+RUN installation_cmds
+EXPOSE port
+CMD [cmds to run in string format]
+
+FROM node:latest
+COPY . .
+RUN npm install
+EXPOSE 8000
+CMD ["node","main.js"]
+
+📌docker-compose.yaml file for postgres and redis:
+version: "3.8"   //version of docker-compose format
+
+services:
+  postgres:      //container name      
+    image: postgres 
+    ports:
+      - "5432:5432"
+    environment: 
+      POSTGRES_USER: postgres
+      POSTGRES_DB: review
+      POSTGRES_PASSWORD: password
+    volumes:
+      - .:/app
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+
+📌Docker Networking: docker network ls
+. Docker has 3 network drivers:
+-> Bridge- This is the default network that Docker uses when you create a new container.It allows to access ext. n/w. Hence it requires port mapping.
+-> Host- (docker run -it --network=host container_name)- Here the container_n/w gets connected to host_n/w. Hence it doesn't req. port mapping.
+->none- (docker run -it --network=none container_name)- Here the container will not have internet connection.
+
+📌Docker volumes:(dataBackUp and real time changes)
+.In docker the data associated with every container is temporary. so when the container is deleted the data also gets deleted. It can also be used to make the real time changes.
+step1: Update the docker file and include nodemon
+FROM node:latest
+RUN npm install -g nodemon
+WORKDIR /app
+COPY . .
+RUN npm install
+EXPOSE 8000
+CMD [ "nodemon","main.js"]
+step2:Now build the docker image using docker build -t img_name .
+step3:Now use docker run --name container_name -p host_port:cont_port --rm -v src_path:dest_path img_name
+
+❓Que- Create a docker network as my-network of driver type- host and then deploy the mysql image named as mysql-demo with 2 env variables- db_name:user and db_password:pass123 and expose the port 8080 to 8000 as host , then add this image to the network my-network and also add volume from /ops to /var/lib/mysql.
+Ans-
+-> docker network create --driver=host my-network
+-> docker run -d --name mysql-demo -e db_name=user -e db_password=pass123 -p 8000:8080 --network=my-network --rm -v /ops:/var/lib/mysql mysql
