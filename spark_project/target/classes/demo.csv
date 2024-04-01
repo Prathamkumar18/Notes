@@ -1,0 +1,38 @@
+Name,Age,Location,Phone,Email,Occupation,Date_of_Birth,Gender,Favorite_Color,Income
+John,25, New York, 123-456-7890, john@example.com, Engineer, 1997-02-15, Male, Blue,60000
+Jane,30, Los Angeles, 987-654-3210, jane@example.com, Doctor, 1992-08-25, Female, Green,80000
+Michael,28, Chicago, 321-654-9870, michael@example.com, Accountant, 1994-11-10, Male, Red,55000
+Jennifer,35, Boston, 456-789-0123, jennifer@example.com, Lawyer, 1989-04-05, Female, Yellow,100000
+David,40, San Francisco, 789-012-3456, david@example.com, Professor, 1984-10-20, Male, Orange,95000
+Sarah,22, Miami, 567-890-1234, sarah@example.com, Student, 2002-03-12, Female, Purple,0
+Robert,45, Seattle, 012-345-6789, robert@example.com, Entrepreneur, 1977-07-28, Male, Pink,150000
+Emily,32, Washington DC, 345-678-9012, emily@example.com, Nurse, 1990-12-15, Female, Black,65000
+Daniel,27, Houston, 901-234-5678, daniel@example.com, Developer, 1995-09-30, Male, White,70000
+Alexis,29, Philadelphia, 234-567-8901, alexis@example.com, Graphic Designer, 1993-06-20, Female, Brown,75000
+John,25, New York, 123-456-7890, john@example.com, Engineer, 1997-02-15, Male, Blue,60000
+Jane,30, Los Angeles, 987-654-3210, jane@example.com, Doctor, 1992-08-25, Female, Green,80000
+Michael,28, Chicago, 321-654-9870, michael@example.com, Accountant, 1994-11-10, Male, Red,55000
+Jennifer,35, Boston, 456-789-0123, jennifer@example.com, Lawyer, 1989-04-05, Female, Yellow,100000
+David,40, San Francisco, 789-012-3456, david@example.com, Professor, 1984-10-20, Male, Orange,95000
+Sarah,22, Miami, 567-890-1234, sarah@example.com, Student, 2002-03-12, Female, Purple,0
+Robert,45, Seattle, 012-345-6789, robert@example.com, Entrepreneur, 1977-07-28, Male, Pink,150000
+Emily,32, Washington DC, 345-678-9012, emily@example.com, Nurse, 1990-12-15, Female, Black,65000
+Daniel,27, Houston, 901-234-5678, daniel@example.com, Developer, 1995-09-30, Male, White,70000
+Alexis,29, Philadelphia, 234-567-8901, alexis@example.com, Graphic Designer, 1993-06-20, Female, Brown,75000
+John,25, New York, 123-456-7890, john@example.com, Engineer, 1997-02-15, Male, Blue,60000
+Jane,30, Los Angeles, 987-654-3210, jane@example.com, Doctor, 1992-08-25, Female, Green,80000
+Michael,28, Chicago, 321-654-9870, michael@example.com, Accountant, 1994-11-10, Male, Red,55000
+Jennifer,35, Boston, 456-789-0123, jennifer@example.com, Lawyer, 1989-04-05, Female, Yellow,100000
+David,40, San Francisco, 789-012-3456, david@example.com, Professor, 1984-10-20, Male, Orange,95000
+Sarah,22, Miami, 567-890-1234, sarah@example.com, Student, 2002-03-12, Female, Purple,0
+Robert,45, Seattle, 012-345-6789, robert@example.com, Entrepreneur, 1977-07-28, Male, Pink,150000
+Emily,32, Washington DC, 345-678-9012, emily@example.com, Nurse, 1990-12-15, Female, Black,65000
+Daniel,27, Houston, 901-234-5678, daniel@example.com, Developer, 1995-09-30, Male, White,70000
+Alexis,29, Philadelphia, 234-567-8901, alexis@example.com, Graphic Designer, 1993-06-20, Female, Brown,75000
+John,25, New York, 123-456-7890, john@example.com, Engineer, 1997-02-15, Male, Blue,60000
+Jane,30, Los Angeles, 987-654-3210, jane@example.com, Doctor, 1992-08-25, Female, Green,80000
+Michael,28, Chicago, 321-654-9870, michael@example.com, Accountant, 1994-11-10, Male, Red,55000
+Jennifer,35, Boston, 456-789-0123, jennifer@example.com, Lawyer, 1989-04-05, Female, Yellow,100000
+David,40, San Francisco, 789-012-3456, david@example.com, Professor, 1984-10-20, Male, Orange,95000
+Sarah,22, Miami, 567-890-1234, sarah@example.com, Student, 2002-03-12, Female, Purple,0
+Robert,45, Seattle, 012-345-6789, robert@example.com, Entrepreneur, 1977-07-28, Male, Pink,150000
