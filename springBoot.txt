@@ -1,0 +1,137 @@
+#Terminology:
+-> Beans- it can represent various components of your application, including controllers,      services,repositories,configuration classes, and more.
+-> pom.xml- it typically manages project dependencies, plugins, build settings, and other project-specific configurations.
+-> Application.properties-  is a configuration file to specify various settings and properties.
+-> Actuator- It offers various built-in endpoints for monitoring health, metrics, environment, etc.
+-> @Entity: Represents a data object or concept in the application, often mapped to a database table.
+-> @Controllers: Handle incoming requests, route them to appropriate processing logic, and return responses to clients.
+-> @Services: Contain the appln logic and interact with the repository.
+-> @Repository: Stores and manages data, providing methods for accessing and manipulating it.
+
+
+#Spring boot context bean: 
+  ApplicationContext context=SpringApplication.run(class_name.class,args);
+  Class class_name=context.getBean(Class.class);
+
+#Application.properties:
+   # Server port configuration
+       server.port=8080
+   # Security configuration
+       security.enabled=true
+   # Debug configuration
+       debug.enabled=true
+       logging.level.root=info
+   # Database configuration
+       spring.datasource.url=jdbc:mysql://localhost:3306/DB_NAME
+       spring.datasource.username=username
+       spring.datasource.password =password
+       spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+       spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+       spring.jpa.properties.hibernate.format_sql=true
+       spring.jpa.hibernate.ddl-auto=update
+
+#MVC(model view controller)-Model is for data and view is for displaying the data
+eg.
+public ModelAndView getAllAliens() {
+        List<Alien> aliens=Arrays.asList(new Alien(1,"pratham"),new Alien(2,"kumar"));
+        ModelAndView mv=new ModelAndView("showAliens");
+        mv.addObject("aliens",aliens);    //we can access the data using {{alien}} in f.end
+        return mv;
+}
+eg.
+public String add(@RequestParam("num1")int a,@RequestParam("num2")int b,Model m) {
+        int sum=a+b;
+        m.addAttribute("sum",sum);    //access the variable sum using {{sum}}
+        return "result"; 
+}
+
+#Filtering Json response:
+-> @JsonProperty("uname")     //to change response variable of the username.
+      String username;
+-> @JsonIgnore({"var_1","var_2"}) //annotate with this in entity class to ignore variables in response. eg.password.
+
+#Actuator:
+-> Add actuator dependency > appln. prop. - management.endpoints.web.exposure.include=* > url: path/actuator
+     
+#Spring data JPA(Java Persistence Api) :
+-> interface repository extends JPARepository<Entity_class,Id_datatype>{}
+-> It will provide built in methods like: findById(), deleteById, save(), saveAll() etc.
+-> Custom finder: datatype findByUserNameAndEmail(String uname,String email);
+-> JPQL:
+     @Query(value="select u.* from user u where u.uid=:uid)
+      datatype findAllUsersWithUserId(long uid);
+-> Native Query:
+     @Query(value="select * from user where uid=:uid order by uid,nativeQuery=true)
+      datatype findAllUsersWithUserId(long uid);
+
+#Spring REST:
+-> Entity: (Its like the table in db)
+eg. @Entity
+     class User{
+       @Id
+       @GeneratedValue(strategy=GenerationType.AUTO)
+       long userId;
+       string email;
+     //constructors,getters,setters,toString
+    }
+-> Controller: (for api endpts) - suppors all type of mapping-get,post,put,delete.
+eg. @RestController
+      @RequestMapping("/")
+     class UserController{
+        @PostMapping("path/{id})
+        void addData(@PathVariable("id") long id, @RequestBody string data, @RequestParam String category){}
+     } 
+     //PathVariable for path parameter, RequestBody for body and RequestParam for query parameter.
+-> Service: (for logic and interacting with repo.)
+eg.  @Service
+       class UserService{}
+-> Repository: (for interacting with DB)
+       interface UserRepository extends JPARepostitory<User,Long>{}
+//Note: Controller > Service > Repository > DB
+
+#ResponseEntity:
+eg.
+  public ResponseEntity<List<Question>>getAllQuestions(){
+      try {
+          return new ResponseEntity(questionRepository.findAll(),HttpStatus.OK);
+      }
+      catch (Exception e) {e.printStackTrace();}
+      return new ResponseEntity<>(new ArrayList<>(),HttpStatus.BAD_REQUEST);
+  }
+
+#Dependency Injection:
+-> Two ways: 
+   -> without constructor:
+       @Autowired
+       private UserRepository userRepo;
+   -> with constructor: //better
+      private UserRepository userRepo;
+      User(UserRepository userRepo){
+        this.userRepo=userRepo;
+      } 
+
+#To run multiple instances:
+-> Run button dropdown > run conf. > java appln. > right click > duplicate (change file name) > in vm arguments (-D server.port= new_port)
+
+#To access the value from the appln.properties:
+private Environment environment;
+String port=environment.getProperty("local.server.port");
+
+#Terminology:(Microservices)
+->Microservices - These are small services that can be developed, deployed, scaled and managed independently.(scalabiliy,loose-coupling,resilence)
+->Api Gateway - It is the entry point for the clients and routes the incoming req. to the appropriate microservices.(routing,auth,load balancing,rate limiting,circuit breaker)-Spring Cloud Gateway
+->Service Registry - It allows various microservices to find other and interact by registering with the service registry.-Netflix Eureka
+->Load Balancer - It distributes the req. evenly across various instances of the microservices.(performance-optimization, fault-tolerance, high availability)- Spring Load Balancer
+->Distributed Tracing - It is used to monitor and debug distributed systems. It is also used for visualization of the req. flows and performance monitoring.- Zipkin
+->Config Server - it holds all the configurations for your different services or applications.- Spring Cloud Config Server
+
+Eg.
+#Currency-exchange and Currency Conversion:
+Here CE is a microservice that will convert one currency to another and CC is a microservice that will call the CE to get the exchange rate and will give the output for the total qty. CC will use open feign client to call CE and every microservice along with the API gateway will register with the service registry(naming server). CE can have multiple instances and hence can use resilence4j ratelimiter,retry,bulkhead etc. and CC can to loadbalancing to call various instance of the CE. Api gateway microservice should have a config.file for the routing. (Check out the project-microservice for dependency and the confn.)
+
+
+
+
+
+
+
