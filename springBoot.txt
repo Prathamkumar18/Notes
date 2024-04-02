@@ -130,8 +130,39 @@ Eg.
 Here CE is a microservice that will convert one currency to another and CC is a microservice that will call the CE to get the exchange rate and will give the output for the total qty. CC will use open feign client to call CE and every microservice along with the API gateway will register with the service registry(naming server). CE can have multiple instances and hence can use resilence4j ratelimiter,retry,bulkhead etc. and CC can to loadbalancing to call various instance of the CE. Api gateway microservice should have a config.file for the routing. (Check out the project-microservice for dependency and the confn.)
 
 
+#Distributed tracing: used for tracking application requests as they flow from frontend devices to backend services and databases. (ZIPKIN)
+Step1: pom.xml
+ spring version should be - <version>3.x.x</version>
+<dependency>
+    <groupId>io.micrometer</groupId>
+    <artifactId>micrometer-observation</artifactId>
+</dependency>
+<dependency>
+    <groupId>io.micrometer</groupId>
+    <artifactId>micrometer-tracing-bridge-otel</artifactId>
+</dependency>
+<dependency>
+    <groupId>io.opentelemetry</groupId>
+    <artifactId>opentelemetry-exporter-zipkin</artifactId>
+</dependency>
+//Use this dependency when it is a feign client.
+<dependency>
+    <groupId>io.github.openfeign</groupId>
+    <artifactId>feign-micrometer</artifactId>
+</dependency>
 
+Step2: Application.properties
+management.tracing.sampling.probability=1.0
+logging.pattern.level=%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]
 
+#Docker:
+In the pom.xml inside <build> after <groupId> and <artifactId> :
+<configuration>
+         <image>
+               <name>name/mmv2-${project.artifactId}:${project.version}</name>
+         </image>
+<configuration>
 
+and then build the docker compose file. and run.
 
 
