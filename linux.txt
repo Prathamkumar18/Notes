@@ -1,46 +1,66 @@
->where file_name - to get the loc. of the file.
+>where file_name - to get the path of the file.
+>find folder or file - to find and list the details of the directory.
+
 >pwd - print working directory.
+
 >cls - clear screen.
->cd path- change directory.
+
+>cd path - change directory.
 >cd .. - to go back.
+
 >mkdir folder_name- to create a folder.
 >mkdir folder_name/subfolder_name - to create subfolder to existing folder.
+
 >touch file_name - to create a file.
 >touch folder_name/file_name - create file inside folder.
+
 >ls - list all the folders.
 >ls -a - list all (including hidden)
->ls -l -list all (with more(long) details.
+>ls -l - list all (with more(long) details.)
 >ls -R - list all (along with the subdir.)
+
 >cat file_name -to view the content.
 >cat > file_name - to create and write in the file.
 >cat file1 file2 - to print f1 and f2 content.
 >cat file1 file2 > file3 - to merge content of f1 and f2 in f3.
 >cat file1 | tr a-z A-Z > new_file - It will take content from file1 and uses translate pipe for converting lower case to uppercase and output is written to newfile.
+
 >echo "text" - it will print text.
 >echo "text" > file_name - it will replace the content of the file with the text.
+
 >cp file1 file2 - to create copy of file 1 as file2.
->cp -R folder1 folder2 - to create copy of folder 1 in folder 2.
+>cp -R folder1 folder2 - to create copy of folder 1 as folder2.
+
 >mv file folder - to move file to folder.
 >mv file1 file2 - it will rename file1 to file2.
 >mv folder1 folder2- it will move folder1 to folder2.
+
 >rm file - to remove file permanently.
 >rm -R folder - to remove folder permanently.
+
 >df - to check disk free space.
 >du - to check disk usage statistics.
->vi file_name - to open vim editor.(click i for insert and esc to save. and :wq to exit.)
+
+>vi file_name - to open vim editor.(click i for insert and esc to save and :wq to exit.)
+
 >head file_name - to display first 10 lines.
 >head -n no_of_lines file_name - to display the content(no of lines specified).
 >tail file_name - to display last 10 lines.
 >tail -n no_of_lines file_name - to display the content from last(lines specified).
+
 >diff file1 file2 - to check the difference in two files.
->find folder or file - to find and list the details of the directory.
->chmod u=permissions,g=permissions,o=permissions file_name - It is used to set the permissions for user,group and others and permissions are read(r),write(w) and execute(x).eg. chmod u=rwx,g=r,o=r a.txt
+
 >whoami- username
 >sudo chown owner_name file_name - change owner of the file.
+>chmod u=permissions,g=permissions,o=permissions file_name - It is used to set the permissions for user,group and others and permissions are read(r),write(w) and execute(x).eg. chmod u=rwx,g=r,o=r a.txt
+
 >grep "text" file_name - used to search text in file.
 >grep -i "text" file_name - case insensetive.
 >grep -n "text" filen_name - also gives line no.
->grep -p "regex" file_name - to search regex.
->sort file_name - display the sorted content.
+>grep -p "regex" file_name - search using regex pattern.
+
+>sort file_name - display the sorted content. (asc.)
+>sort -r file_name - display the sorted content. (desc.)
+
 >zip zip_file_name file_name - to zip.
 >unzip zip_file_name - to unzip.
