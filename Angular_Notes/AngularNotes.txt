@@ -35,7 +35,7 @@
                        <li *ngSwitchCase="val1">...</li>
                                    :
                        <li *ngSwitchDefault>default</li>
-                  </div>
+                     </div>
  -Attribute directive:
    -ngStyle - [ngStyle]="{'color':'blue'}" 
    -ngClass - [ngClass]="{class-name : condition}"
@@ -50,7 +50,7 @@
 
 #Angular Components:
   @Component({
-     selector: 'app-component',      -> this can be used as <app-component><app-component> to embed this component.
+     selector: 'app-component',      -> use <app-component><app-component> to embed this component.
      templateUrl: 'path.html',         -> html file path
      styleUrl: 'path.css'                    ->css file path
   })
@@ -98,7 +98,7 @@
 
 - To add router programmatically: use (click)=fun() and then navigation in function.
       - use this.router.navigate(['path'],[...] ,{relativeTo:this.routes,queryParams:{a:'',b:''},fragment:'#hello'}) where 2nd parameter is optional.
-      -In 2nd parameter- relativeTo uses activatedRoute (current route)  , queryParams for passing query as k-v pair and fragments.
+      - In 2nd parameter- relativeTo uses activatedRoute (current route)  , queryParams for passing query as k-v pair and fragments.
 
 - To access the data passed in the url: [use activated route]
     - Let say the url is: http:localhost:4200/home/1?filter=country#location ( basepath/param/path_param?query_param(k-v)#fragment )
@@ -120,7 +120,7 @@
         });
 
 #Angular Forms:
-- Types: Template Driven Approach and Reactive Forms
+- Types: Template Driven Forms and Reactive Forms
 - Template Driven:
   - add FormsModule in imports[]
   - <form (ngSubmit)="onSubmit()" #f="ngForm">...</form> 
@@ -129,10 +129,10 @@
   - Set: to set the whole form.
     this.form.form.setValue({
        userData:{                                html: for creating model group and to access it in ts use (this.form.value.userData.name)
-         'name':'prats',                            <div ngModelGroup="userData">
-         'email':'a@gmail.com'                    <input type="text" id="username" class="form-control" name="username" ngModel required>
-       },                                                      <input type="email" id="email" class="form-control" name="email" ngModel required email #email="ngModel">
-       gender:'male'                               </div>
+         'username':'prats',                           <div ngModelGroup="userData">
+         'email':'a@gmail.com'                           <input type="text" id="username" class="form-control" name="username" ngModel required>
+       },                                                             <input type="email" id="email" class="form-control" name="email" ngModel required email #email="ngModel">
+       gender:'male'                                    </div>
       });
   - Patch: to set few field(s).
     this.form.form.patchValue({
@@ -172,7 +172,6 @@
 #Angular Http:
 - Add HttpClientModule in the app.module.ts and inject HttpClient to use the http methods.
 - this.http.get<DataType>('url',{
-         {
              headers: new HttpHeaders({'custom-header':'Hello'}),
              params: {'id', '1},
              responseType: 'text',
@@ -210,16 +209,16 @@
 
 #AngularSignals:
 - to change the ui when the value changes.
-- Angular does it automatically by internally using the change detection which leads to performance   issue and large bundle.
-- Hence to avoid it use signals to update the ui when value changes.
+- Angular does it automatically by internally using the change detection which leads to performance issue and large bundle.
+- Hence to avoid it, use signals to update the ui when value changes.
 - signals provide 2 functions: update and set.
 - update: counter.update((oldVal)=> oldVal + 1);
 - set: counter.set(5);
 - Eg.
-  Normal:                          Signals:
-  couter=0;                    counter=signal(0);
-  f(){ counter++;}         f(){ counter.update((oldVal)=> oldVal+1);
-  {{counter}}-html       {{counter()}} -html
+  Normal:                            Signals:
+  couter=0;                          counter=signal(0);
+  f(){ counter++;}               f(){ counter.update((oldVal)=> oldVal+1);
+  {{counter}}-html             {{counter()}} -html
 - Computer Signals: is used to derive value from other signals.
   - const doubleCount = computed(() => counter() * 2);
 - effect()- used to notify when signals changes. (generally in ngOnInit or constructor)
