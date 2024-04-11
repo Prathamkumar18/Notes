@@ -1,9 +1,9 @@
 #Terminology:
--> Beans- it can represent various components of your application, including controllers,      services,repositories,configuration classes, and more.
+-> Beans- it can represent various components of your application, including controllers,services,repositories,configuration classes, and more.
 -> pom.xml- it typically manages project dependencies, plugins, build settings, and other project-specific configurations.
 -> Application.properties-  is a configuration file to specify various settings and properties.
 -> Actuator- It offers various built-in endpoints for monitoring health, metrics, environment, etc.
--> @Entity: Represents a data object or concept in the application, often mapped to a database table.
+-> @Entity: Represents a data object, often mapped to a database table.
 -> @Controllers: Handle incoming requests, route them to appropriate processing logic, and return responses to clients.
 -> @Services: Contain the appln logic and interact with the repository.
 -> @Repository: Stores and manages data, providing methods for accessing and manipulating it.
@@ -54,7 +54,7 @@ public String add(@RequestParam("num1")int a,@RequestParam("num2")int b,Model m)
 -> Add actuator dependency > appln. prop. - management.endpoints.web.exposure.include=* > url: path/actuator
      
 #Spring data JPA(Java Persistence Api) :
--> interface repository extends JPARepository<Entity_class,Id_datatype>{}
+-> interface repository extends JpaRepository<Entity_class,Id_datatype>{}
 -> It will provide built in methods like: findById(), deleteById, save(), saveAll() etc.
 -> Custom finder: datatype findByUserNameAndEmail(String uname,String email);
 -> JPQL:
@@ -65,7 +65,7 @@ public String add(@RequestParam("num1")int a,@RequestParam("num2")int b,Model m)
       datatype findAllUsersWithUserId(long uid);
 
 #Spring REST:
--> Entity: (Its like the table in db)
+-> Entity: (Its like a table in db)
 eg. @Entity
      class User{
        @Id
@@ -86,8 +86,8 @@ eg. @RestController
 eg.  @Service
        class UserService{}
 -> Repository: (for interacting with DB)
-       interface UserRepository extends JPARepostitory<User,Long>{}
-//Note: Controller > Service > Repository > DB
+       interface UserRepository extends JpaRepostitory<User,Long>{}
+//Note: Controller > Service > ServiceImpl (implementation class of Service) > Repository > DB
 
 #ResponseEntity:
 eg.
@@ -127,7 +127,7 @@ String port=environment.getProperty("local.server.port");
 
 Eg.
 #Currency-exchange and Currency Conversion:
-Here CE is a microservice that will convert one currency to another and CC is a microservice that will call the CE to get the exchange rate and will give the output for the total qty. CC will use open feign client to call CE and every microservice along with the API gateway will register with the service registry(naming server). CE can have multiple instances and hence can use resilence4j ratelimiter,retry,bulkhead etc. and CC can to loadbalancing to call various instance of the CE. Api gateway microservice should have a config.file for the routing. (Check out the project-microservice for dependency and the confn.)
+Here CE is a microservice that will convert one currency to another and CC is a microservice that will call the CE to get the exchange rate and will give the output for the total qty. CC will use open feign client to call CE and every microservice along with the API gateway will register with the service registry(naming server). CE can have multiple instances and hence can use resilence4j ratelimiter,retry,bulkhead etc. and CC can do loadbalancing to call various instance of the CE. Api gateway microservice should have a config file for the routing. (Check out the project-microservice for dependency and the confn.)
 
 
 #Distributed tracing: used for tracking application requests as they flow from frontend devices to backend services and databases. (ZIPKIN)
@@ -144,7 +144,7 @@ Step1: pom.xml
 <dependency>
     <groupId>io.opentelemetry</groupId>
     <artifactId>opentelemetry-exporter-zipkin</artifactId>
-</dependency>
+</dependency
 //Use this dependency when it is a feign client.
 <dependency>
     <groupId>io.github.openfeign</groupId>
