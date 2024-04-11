@@ -1,10 +1,10 @@
-📌Docker allows the application to develop, ship & run in isolated environment(within containers) where every container will share same OS unlike VMs.
-Hence it solves the problem of dependency management(it work on my machine), code migration, scalable, portable, isolation,resource efficiency.
+📌Docker allows the application to develop, ship & run in an isolated environment(within containers) where every container will share same OS unlike VMs.
+Hence it solves the problem of dependency management(it works on my machine prob.), code migration, scalability, portable, isolation,resource efficiency.
 
 📌Three parts-
 1)Runtime: to start and stop container.
  a)Runc- Low level container runtime to create and run containers.
- b)continerd- High level container runtime to manage the entire lifecycle of container like creating,running,deleting, and networking.
+ b)containerd- High level container runtime to manage the entire lifecycle of container like creating,running,deleting, and networking.
 
 2)Engine:
  a)Docker Daemon-It listens the Docker API req. and manages lifecycle.
@@ -25,6 +25,7 @@ Hence it solves the problem of dependency management(it work on my machine), cod
 📌Docker Commands:
 .docker run img_name:version - to pull image and run
 .docker pull img_name:version - to pull image and not run
+.docker search keyword - search for Docker images on Docker Hub
 .docker ps - to list all running containers
 .docker ps -a -to list all containers
 .docker stop container_name - to stop the container
@@ -36,15 +37,17 @@ Hence it solves the problem of dependency management(it work on my machine), cod
 .docker images - to list all images
 .docker rmi img_name - to remove the image
 .docker rmi $(docker images -a -q) - to remove all the images
-.docker image history - history of image.
-.docker run -d container_name - to run in detach mode (background)
-.docker attach container_name or container_id - to attach
+.docker image history img_name - history of image.
+.docker run -d img_name - to run in detach mode (background)
+.docker attach img_name or img_id - to attach
 .docker run --name new_name old_name - to run container with new name
+.docker rename old_name new_name - to rename the container
 .docker run -it img_name - to run in interactive way
-.docker inspect container_name/container_id - to see details of container
+.docker tag src_img:src_tag tar_img:targ_tag - to tag a Docker image with a specific name and version
+.docker inspect container_name or container_id - to see details of container
 .docker run img_name cat /etc/*release* - to check the details of the image
-.docker logs container_id/container_name - to see logs
-.docker run -it -p <host_port>:<container_port> image-name -(host_port -my & container_port - web server)eg.docker run -p 8080:3306 mysql (so we can run multiple instances by changing the host_port).
+.docker logs container_id or container_name - to see logs
+.docker run -p <host_port>:<container_port> image-name -(host_port -my & container_port - web server)eg.docker run -p 8080:3306 mysql (so we can run multiple instances by changing the host_port).
 .docker run -e key=value -e key=value img_name - env variable
 .docker system prune - to remove all stopped container and unused images.
 .docker build -t img_name:tag . - to build the docker image
@@ -57,8 +60,10 @@ Hence it solves the problem of dependency management(it work on my machine), cod
 .docker run --memory=100m container_name - the container is not allwoed to use >100mb memory.
 .docker system df - information about Docker's disk usage.
 .docker network ls - to list all network drivers.
-.docker network create -d --driver=driver_type --subnet=subnet --gateway=gateway ntw_name - to create a custom network. (driver type- host/none/bridge)
+.docker network create --driver driver_type --subnet=subnet --gateway=gateway ntw_name - to create a custom network. (driver type- host/none/bridge)
+.docker network rm net_name - to remove network
 .docker events - to know about the various events
+.docker volume create volume_name - to create volume
 
 
 📌Dockerfile example for nodejs app:
@@ -98,10 +103,10 @@ services:
 . Docker has 3 network drivers:
 -> Bridge- This is the default network that Docker uses when you create a new container.It allows to access ext. n/w. Hence it requires port mapping.
 -> Host- (docker run -it --network=host container_name)- Here the container_n/w gets connected to host_n/w. Hence it doesn't req. port mapping.
-->none- (docker run -it --network=none container_name)- Here the container will not have internet connection.
+-> None- (docker run -it --network=none container_name)- Here the container will not have internet connection.
 
 📌Docker volumes:(dataBackUp and real time changes)
-.In docker the data associated with every container is temporary. so when the container is deleted the data also gets deleted. It can also be used to make the real time changes.
+.In docker the data associated with every container is temporary. so when the container is deleted the data also gets deleted. It can also be used to make real time changes.
 step1: Update the docker file and include nodemon
 FROM node:latest
 RUN npm install -g nodemon

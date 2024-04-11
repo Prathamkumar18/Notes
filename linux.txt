@@ -1,5 +1,7 @@
 >where file_name - to get the path of the file.
 >find folder or file - to find and list the details of the directory.
+>man cmd_name - to view manual page of the cmd.
+>date - to display current date
 
 >pwd - print working directory.
 
@@ -36,10 +38,12 @@
 >mv folder1 folder2- it will move folder1 to folder2.
 
 >rm file - to remove file permanently.
->rm -R folder - to remove folder permanently.
+>rm -r folder - to remove folder permanently.
 
 >df - to check disk free space.
 >du - to check disk usage statistics.
+>ps - list all processes
+>ip addr - to check ipaddress
 
 >vi file_name - to open vim editor.(click i for insert and esc to save and :wq to exit.)
 
