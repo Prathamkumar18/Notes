@@ -14,10 +14,10 @@
 
 #Categorization of processors:
 .DataIngestion:GetFile,GetFTP,GetSFTP,GetHTTP,GetHDFS,GetKafka.
-.DataTransformation:ReplaceText,JoltTransformJSON,
-.SendingData:PutFile,PutFTP,PutKafka,PutEmail
-.Routing and Mediation:RouteOnAttribute,RouteOnContent
-.AttributeExtraction:ExtractText,ExtractJsonPath,LogAttribute,UpdateAttribute
+.DataTransformation:ReplaceText,JoltTransformJSON.
+.SendingData:PutFile,PutFTP,PutKafka,PutEmail.
+.Routing and Mediation:RouteOnAttribute,RouteOnContent.
+.AttributeExtraction:ExtractText,ExtractJsonPath,LogAttribute,UpdateAttribute.
 .DatabaseAccess:ExecuteSQL,ConvertJSONToSQL,ListDatabaseTable.
 .System Interaction:ExecuteProcess
 .SplittingAndAggregation:SplitText,SplitJson,SplitXml,MergeContent.
@@ -25,7 +25,7 @@
 .AWS:FetchS3Object,PutS3Object,PutSNS,GetSQS
 
 #BackPressure happens when the object thresold or data thresold is reached
-.Object thresold(10,000- FlowFiles can be present in the queue for processing) and DataThresold(1GB data should be processed).Once the threshold value is reached, the connector doesn’t allow any further flow files or messages to get build up. 
+.Object thresold(at max 10,000- FlowFiles can be present in the queue for processing) and DataThresold(at max 1GB data should be processed).Once the threshold value is reached, the connector doesn’t allow any further flow files or messages to get build up.
 
 #
 .Penalty duration:Time for which the FF should be penalized(if not processed)
@@ -38,7 +38,7 @@
 
 #
 .To use the attribute of other processor use ${}
-.To select are use shift key
+.To select area use shift key
 
 #
 .Process group- used for grouping the processors.
