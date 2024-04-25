@@ -99,6 +99,9 @@ eg.
       return new ResponseEntity<>(new ArrayList<>(),HttpStatus.BAD_REQUEST);
   }
 
+eg. ResponseEntity.status(HttpStatus.OK).build();
+eg. ResponseEntity.ok(body);
+
 #Dependency Injection:
 -> Two ways: 
    -> without constructor:
