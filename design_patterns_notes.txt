@@ -1,0 +1,180 @@
+#Design Patterns: (only imp. ones)
+ 1. Creational DP- Singleton, Factory method, Builder
+ 2. Structural DP- Adapter
+ 3. Behavioural DP- Strategy, Observer, state
+
+#Singleton DP:
+->It ensures a class only has one instance, and provides a global point of access to it.
+->Singleton classes are used for logging, driver objects, caching, and thread pool, database connections.
+->Code snippet:
+class Singleton {
+    private static Singleton instance;           //to hold single instance.
+    private Singleton(){}                             
+    public static Singleton getInstance(){   
+     if (instance == null)                             //to access the demo().. use Singleton.getInstance().demo();
+            instance = new Singleton();
+        return instance;
+    }
+    public static void demo()
+    {
+        System.out.println("demo mtd.");
+    }
+}
+
+//Explanation: We have created a singleton class and mark the constructor as private to prevent external instantiation and getInstance() to get the single instance of the class.
+
+#Factory DP:
+->It provides an interface for creating objects, but allows subclasses or concrete factories to alter the type of objects that will be created, thus providing flexibility in object instantiation.
+->It decouples client code from object creation logic and centralizes object creation, simplifying management and modification.
+->Code snippet:
+interface Os{
+  public void spec();
+}
+class Android implements Os{
+  public void spec(){
+    System.out.println("android");
+  }
+}
+class Ios implements Os{
+  public void spec(){
+    System.out.println("ios");
+  }
+}
+class OsFactory{                                                                   //Factory class will be responsible for instantiating an object. 
+    public Os getInstance(String osType){                            //so in future if some other os is added then factory class will only change.
+         if(osType.equals("android")) return new Android();  //it serves as the central class for object creation.
+         else return new Ios();
+    }
+}
+class Main{
+  public static void main(String args[]){
+       OsFactory factory=new OsFactory();
+       Android android=factory.getInstance("android");
+       android.spec();
+       Ios ios=factory.getInstance("ios");
+       ios.spec();
+  }
+}
+
+//Explanation: Initially we have android and ios os and OsFactory is initializing different os.. so if in future new os is introduced then we just have to modify OsFactory class 
+                         and not the client class.
+
+#Builder DP:
+->It lets you construct complex objects step by step and it allows you to produce different types and representations of an object using the same construction code.
+->It's particularly useful when dealing with objects that have a large number of optional parameters or configurations.
+->Code snippet:
+public class Phone {
+    private String name;
+    private String os;
+    private int battery;
+
+    public Phone(String name, String os, int battery) {
+        this.name = name;
+        this.os = os;
+        this.battery = battery;
+    }
+    @Override
+    public String toString() {
+        return "Phone{" +
+                "name='" + name + '\'' +
+                ", os='" + os + '\'' +
+                ", battery=" + battery +
+                '}';
+    }
+}
+
+public class PhoneBuilder {
+    private String name;
+    private String os;
+    private int battery;
+
+    public PhoneBuilder setName(String name) {
+        this.name = name;
+        return this;
+    }
+    public PhoneBuilder setOs(String os) {
+        this.os = os;
+        return this;
+    }
+    public PhoneBuilder setBattery(int battery) {
+        this.battery = battery;
+        return this;
+    }
+    public Phone build() {
+        return new Phone(name, os, battery);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Phone myPhone = new PhoneBuilder().setName("iPhone 13").setOs("iOS").setBattery(3100).build();
+        System.out.println(myPhone);
+    }
+}
+
+//Explanation: If we have not created the PhoneBuilder class then to create an object of Phone we have to pass all the arguments of the phone in the constructor.. now lets take a case
+                         where a class have a very large no. of arguments and we req. only few arguments..so for that type of scenario builder pattern is used.
+
+#Adapter DP:
+->It is valuable whenever you need to make two incompatible interfaces work together without modifying their source code.
+->Code snippet:
+interface OldLogger {
+    void logMessage(String message);
+}
+class OldLoggerImpl implements OldLogger {
+    public void logMessage(String message) {
+        System.out.println("Old Logger: " + message);
+    }
+}
+
+interface NewLogger {
+    void log(String message);
+}
+
+class NewLoggerImpl implements NewLogger {
+    public void log(String message) {
+        System.out.println("New Logger: " + message);
+    }
+}
+
+// Adapter class to adapt OldLogger to NewLogger interface
+class OldToNewLoggerAdapter implements NewLogger {
+    private OldLogger oldLogger;
+
+    public OldToNewLoggerAdapter(OldLogger oldLogger) {
+        this.oldLogger = oldLogger;
+    }
+
+    public void log(String message) {
+        oldLogger.logMessage(message);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {                                                               
+        OldLogger oldLogger = new OldLoggerImpl();
+        oldLogger.logMessage("Message from old logger");
+
+        NewLogger newLogger = new OldToNewLoggerAdapter(oldLogger);
+        newLogger.log("Message from new logger");
+    }
+}
+
+//Explanation: Initially there was a interface OldLogger which has method logMessage() and let say a new interface is introduced as NewLogger with method log() and we want
+                          the oldLogger to now behave as NewLogger (ie. oldLogger to adapt to newLogger) so we have created the oldtonew adapter class which implements newLogger
+                          and logMessage() of oldLogger will adapt to log() of newLogger.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
