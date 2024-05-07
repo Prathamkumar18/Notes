@@ -164,17 +164,139 @@ public class Main {
                           the oldLogger to now behave as NewLogger (ie. oldLogger to adapt to newLogger) so we have created the oldtonew adapter class which implements newLogger
                           and logMessage() of oldLogger will adapt to log() of newLogger.
 
+#Observer DP:
+->It allows an object to notify its dependents automatically when its state changes.
+->Code snippet:
+//Observer subscribes the Subject and Subject notifies the Observer.
+//Subject interface
+interface YouTubeChannel {
+    void registerSubscriber(Subscriber subscriber);
+    void removeSubscriber(Subscriber subscriber);
+    void notifySubscribers(String videoTitle);
+}
+//Observer interface
+interface Observer{
+    void update(String videoTitle);
+}
+class Channel implements YouTubeChannel {
+    private List<Subscriber> subscribers = new ArrayList<>();
 
+    public void registerSubscriber(Subscriber subscriber) {
+        subscribers.add(subscriber);
+    }
+    public void removeSubscriber(Subscriber subscriber) {
+        subscribers.remove(subscriber);
+    }
+    public void notifySubscribers(String videoTitle) {
+        for (Subscriber subscriber : subscribers) {
+            subscriber.update(videoTitle);
+        }
+    }
+    public void uploadVideo(String videoTitle) {
+        notifySubscribers(videoTitle);
+    }
+}
+class Subscriber implements Observer {
+    private String name;
+    public Subscriber(String name) {
+        this.name = name;
+    }
+    public void update(String magazine) {
+        System.out.println(name + " received the latest issue of " + magazine);
+    }
+}
+class Main{
+    public static void main(String[] args) {
+        Channel channel= new Channel();
+        Subscriber s1= new Subscriber("John");
+        Subscriber s2= new Subscriber("Alice");
+        channel.registerSubscriber(s1);
+        channel.registerSubscriber(s2);
+        channel.uploadVideo("new video");
+    }
+}
 
+//Explanation: Observer will subscribe to the Subject to get all the updates and Subject can notify all the Observers.
 
+#State DP:
+->It is useful when an object's behavior is dependent on its state and needs to change dynamically based on that state.
+->Code snippet:
+public class Context {
+   private State state;
+   public Context(){
+      state = null;
+   }
+   public void setState(State state){
+      this.state = state;		
+   }
+   public State getState(){
+      return state;
+   }
+}
+public interface State {
+   public void doAction(Context context);
+}
+public class StartState implements State {
+   public void doAction(Context context) {
+      System.out.println("Player is in start state");
+      context.setState(this);	
+   }
+   public String toString(){
+      return "Start State";
+   }
+}
+public class StopState implements State {
+   public void doAction(Context context) {
+      System.out.println("Player is in stop state");
+      context.setState(this);	
+   }
+   public String toString(){
+      return "Stop State";
+   }
+}
+public class Main{
+   public static void main(String[] args) {
+      Context context = new Context();
+      StartState startState = new StartState();
+      startState.doAction(context);
+      System.out.println(context.getState().toString());
+   }
+}
 
+//Explanation: Here context is the object whose behaviour depends on the state.. so whenever the state changes setState() of context is called.
 
+#Strategy DP:
+->It enables selecting an algorithm at runtime.
+->Code snippet:
+interface SortingStrategy {
+    void sort(int[] array);
+}
+class BubbleSort implements SortingStrategy {
+    public void sort(int[] array) {
+        System.out.println("Sorting array using Bubble Sort");
+    }
+}
+class QuickSort implements SortingStrategy {
+    public void sort(int[] array) {
+        System.out.println("Sorting array using Quick Sort");
+    }
+}
+class Sorter {
+    private SortingStrategy sortingStrategy;
+    public void setSortingStrategy(SortingStrategy sortingStrategy) {
+        this.sortingStrategy = sortingStrategy;
+    }
+    public void performSort(int[] array) {
+        sortingStrategy.sort(array);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Sorter sorter = new Sorter();
+        sorter.setSortingStrategy(new BubbleSort());
+        int[] array1 = {3, 1, 5, 2, 4};
+        sorter.performSort(array1);
+    }
+}
 
-
-
-
-
-
-
-
-
+//Explanation: There are multiple sorting algorithms here but sorting strategy is set at runtime and performSort() is called.
