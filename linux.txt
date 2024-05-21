@@ -6,9 +6,12 @@
 >pwd - print working directory.
 
 >cls - clear screen.
+>history - to get history of commands used.
 
 >cd path - change directory.
->cd .. - to go back.
+>cd .. - to move back one directory
+>cd ../.. - to move back two directories
+>cd ~ - to move back to your home directory
 
 >mkdir folder_name- to create a folder.
 >mkdir folder_name/subfolder_name - to create subfolder to existing folder.
@@ -45,7 +48,8 @@
 >ps - list all processes
 >ip addr - to check ipaddress
 
->vi file_name - to open vim editor.(click i for insert and esc to save and :wq to exit.)
+>vi filename - to open vim editor.(click i for insert and esc to save and :wq to exit.)
+>gedit filename - to open text editor.
 
 >head file_name - to display first 10 lines.
 >head -n no_of_lines file_name - to display the content(no of lines specified).

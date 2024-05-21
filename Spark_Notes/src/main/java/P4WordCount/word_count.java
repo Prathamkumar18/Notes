@@ -7,7 +7,6 @@ import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 
-
 import scala.Tuple2;
 
 public class word_count {
@@ -20,6 +19,7 @@ public class word_count {
         JavaRDD<String> words=lines.flatMap(line -> Arrays.asList(line.split(" ")).iterator());
         JavaPairRDD<String,Integer> pairs= words.mapToPair(x -> new Tuple2<>(x,1));
         JavaPairRDD<String,Integer> wordCount= pairs.reduceByKey(Integer::sum);
+        //JavaPairRDD<String, Integer> wordCount = pairs.reduceByKey((count1, count2) -> count1 + count2);
         wordCount.collect().forEach(System.out::println);
         
         //To Print top 5 max count words.

@@ -19,12 +19,12 @@ public class Dstreams {
 		SparkConf conf=new SparkConf().setMaster("local[*]").setAppName("Dstreams");
 		JavaStreamingContext sc=new JavaStreamingContext(conf,Durations.seconds(5));
  		
-		 JavaReceiverInputDStream<String> inputData = sc.socketTextStream("localhost",8989);
- 		 JavaPairDStream<Object, Long> mappedData = inputData.mapToPair(item -> new Tuple2<>(item.split(",")[0],1L));
- 		 mappedData=mappedData.reduceByKeyAndWindow((x, y)->x+y, Durations.seconds(5)); //keyAndWindow will aggregate the sum from the prev. window.
- 		 mappedData.print();
+		JavaReceiverInputDStream<String> inputData = sc.socketTextStream("localhost",8989);
+ 		JavaPairDStream<Object, Long> mappedData = inputData.mapToPair(item -> new Tuple2<>(item.split(",")[0],1L));
+ 		mappedData=mappedData.reduceByKeyAndWindow((x, y)->x+y, Durations.seconds(5)); //keyAndWindow will aggregate the sum from the prev. window.
+ 		mappedData.print();
  		 
- 		 sc.start();
- 		 sc.awaitTermination();
+ 		sc.start();
+ 		sc.awaitTermination();
  	}
 }

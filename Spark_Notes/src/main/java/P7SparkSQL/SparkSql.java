@@ -44,7 +44,6 @@ public class SparkSql {
 		
 		System.out.println("===Group by location and order by count in asc order");
 		df.groupBy("Location").count().orderBy(count(col("Location"))).show();
-		
 			
 		//House problem: To read house data from RealEstate.csv, group by loc. aggregate the avg. price per sq ft and max price and sort by avg price per sq ft.
 		Dataset<Row> houseData= ss.read().option("header","true").csv("C:/Users/pratham.kumar/eclipse-workspace/spark_projects/src/main/resources/RealEstate.csv");
