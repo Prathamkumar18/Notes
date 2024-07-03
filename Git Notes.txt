@@ -1,0 +1,89 @@
+1. Git configuration
+.git config --global user.name "user_name"  : to set username
+.git config --global user.email "email_id"  : to set email
+.git config --list  : git config settings
+
+2. Starting a project
+.git init  : to initialize local repository
+.git clone remote_url  : to make a local copy of the server repository
+.git clone -b branch_name remote_url  : to take clone from a particular branch
+
+3. Local changes
+.git add file_name  : add a file to staging area
+.git add .  : add all files to staging area
+.git reset file_name  : to remove file from staging area
+.git commit -m "commit_message"  : to commit changes
+
+4. Track changes
+.git diff  : Track the changes that have not been staged
+.git diff --staged  : Track the changes that have staged but not committed
+.git diff HEAD  : Track the changes after committing a file
+.git diff commit1-sha commit2-sha  : Track the changes between two commits
+.git diff branch_1 branch_2  : Git Diff Branches
+.git status  : the state of the working directory and the staging area
+.git show <objects>  : Shows objects
+
+5. Commit History
+.git log  : Display the most recent commits and the status of the head
+.git log -n  : to display n recent commits
+.git log --oneline  : Display the output as one commit per line
+.git log --stat  : Displays the files that have been modified
+.git blame file_name  : Display the modification on each line of a file
+
+6. Branching
+.git branch branch_name  : Create branch
+.git branch --list  : List all local Branch
+.git branch -r  : List all remote branch
+.git branch -d branch_name  : Delete Branch
+.git push origin -delete branch_name  : Delete a remote Branch
+.git branch -m <old branch name> <new branch name>  : Rename Branch
+.git checkout branch_name  : Switch to a particular branch
+.git checkout -b branch_name  : Create a new branch and switch to it
+
+7. Git Stash
+.git stash  : Stash current work
+.git stash save "stashing_message"  : Saving stashes with a message
+.git stash list  : Check the stored stashes
+.git stash apply  : Re-apply the changes that you just stashed
+.git stash pop  : Re-apply the previous changes that you just stashed(remove from the stash stack)
+.git stash show  : Track the stashes and their changes
+.git stash drop  : Delete a most recent stash from the queue
+.git stash clear  : Delete all the available stashes at once
+
+8. Git cherry pic
+.git cherry-pick commit_id  : Apply the changes introduced by some existing commit
+
+9. Merging
+.git merge branch_name  : Merge the branches
+.git merge commit_id  : Merge the specified commit to currently active branch
+
+10. Rebase
+.git rebase base_branch  : it allows you to apply commits on top of another branch (checkout to feature branch and do git rebase main to apply your commit on top of main branch)
+.git rebase --abort  : to abort the rebasing process
+.git rebase --continue  : Continue the rebasing process
+.git rebase --skip  : Skips the current commit and continue with other commits
+
+11. Remote
+.git remote -v  : Check the configuration of the remote server
+.git remote add remote_name remote_url  : Add a remote for the repository
+.git fetch <Remote>  : Fetch the data from remote server
+.git remote rm <destination>  : Remove a remote connection from the repository
+.git remote rename <old name> <new name>  : Rename remote server
+.git remote show <remote>  : Show additional information about a particular remote
+.git remote set-url remote_name <newURL>  : Change remote
+
+12. Pushing Updates
+.git push origin master  : Push data to remote server
+.git push remote_name branch_name  : push your branch to remote server
+
+13. Pulling updates
+.git pull origin master  : Pull the data from the server  (git fetch + git merge)
+.git fetch <repository_url>  : Fetch the remote repository
+.git fetch <branch URL> <branch name>  : Fetch a specific branch
+.git fetch –-all  : Fetch all the branches simultaneously
+.git fetch origin  : Synchronize the local repository
+
+14. Undo changes
+.git revert <commit-ish>  : Revert a particular commit
+.git reset --hard commit_id  : to go back to this commit and all the local changes will be removed.(DO Stash them)
+.git reset --soft commit_id  : to go back to this commit and the local changes will remain.
