@@ -1,0 +1,99 @@
+>find path -name file - to find the file. [eg. find ./ -name a.txt]
+>man cmd_name - to view manual page of the cmd.
+>pwd - print working directory.
+>cls/clear - clear screen.	
+>exit - close terminal.
+>hostname - to check hostname of your Linux server.
+>history - to get history of commands used.
+>date - to display current date.
+>bc - to open binary calculator.
+>cal - to view calender of present month.
+>cal year - to view calender of the year.
+
+>cd path - change directory.
+>cd .. - to move back one directory
+>cd ../.. - to move back two directories
+>cd ~ - to move back to your home directory
+
+>mkdir folder_name- to create a folder.
+>mkdir folder_name/subfolder_name - to create subfolder to existing folder.
+
+>touch file_name - to create a file.
+>touch folder_name/file_name - create file inside folder.
+
+>ls - list all the folders.
+>ls -a - list all (including hidden)
+>ls -l - list all (with more(long) details.)
+>ls -R - list all (along with the subdir.)
+>ls *.file_type - to list all file of this type.
+
+>cat file_name -to view the content.
+>cat file1 file2 - to print f1 and f2 content.
+>cat file1 file2 > file3 - to merge content of f1 and f2 in f3.
+>cat file1 | tr a-z A-Z > new_file - It will take content from file1 and uses translate pipe for converting lower case to uppercase and output is written to newfile.
+
+>echo "text" - it will print text.
+>echo "text" > file_name - it will replace the content of the file with the text.
+
+>cp file1 file2 - to create copy of file 1 as file2.
+>cp -r folder1 folder2 - to create copy of folder 1 as folder2.
+
+>mv file folder - to move file to folder.
+>mv file1 file2 - it will rename file1 to file2.
+>mv folder1 folder2- it will move folder1 to folder2.
+
+>rm file - to remove file permanently.
+>rm -r folder - to remove folder permanently.
+
+>vi/vim filename - to open vim editor.(click i for insert and esc to save and :wq to exit.)
+>gedit filename - to open text editor.
+
+>df - to check disk free space.
+>du - to check disk usage statistics.
+>free - to check free ram space.
+>lscpu - to check cpu/core/thread info.
+>arch - to check architecture of your Linux server.
+>ip a/addr - to list the IP addresses associated with network interface.
+
+>ps - list all processes.
+>pgrep process_name - to get pid of process.
+>kill -9 pid - to forcefully kill process by process id.
+>pkill process_name - to kill process by process name.
+
+>head file_name - to display first 10 lines.
+>head -n no_of_lines file_name - to display the content(no of lines specified).
+>tail file_name - to display last 10 lines.
+>tail -n no_of_lines file_name - to display the content from last(lines specified).
+
+>cmp file1 file2 - to check whether two files are identical or not.
+>diff file1 file2 - to check the difference in two files.
+>split -l n file_name - to split file into n files.
+>shuf file_name - to shuffle file content.
+>wc -l file_name - to check no. of lines in a file.
+
+>whoami- username
+>sudo chown owner_name file_name - change owner of the file.
+>chmod u=permissions,g=permissions,o=permissions file_name - It is used to set the permissions for user,group and others and permissions are read(r),write(w) and execute(x).eg. chmod u=rwx,g=r,o=r a.txt
+
+>grep "text" file_name - used to search text in file.
+>grep -i "text" file_name - case insensetive.
+>grep -n "text" filen_name - also gives line no.
+>grep -p "regex" file_name - search using regex pattern.
+>egrep "text1|text2|.." file_name - to search multiple text.
+
+>sort file_name - display the sorted content. (asc.)
+>sort -r file_name - display the sorted content. (desc.)
+
+>gzip -k file_name - to zip file.
+>gunzip zip_file_name - to unzip file.
+>tar -czf name.tar.gz folder_name/ - to zip folder. (czf- compress zip folder)
+>tar -xzf zip_folder - to unzip folder. (xzf- extract zip folder)
+
+>script - it will start recording the commands executed on a file and to exit use ctrl+D.
+>reboot - to reboot Linux server.
+>shutdown - to shutdown Linux server.
+
+>useradd user_name - to add user to your Linux server.
+>passwd user_name - to update password.
+>su user_name - to login as particular user.
+>userdel user_name - to delete user.

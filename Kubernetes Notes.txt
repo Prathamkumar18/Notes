@@ -1,0 +1,275 @@
+📌Kubernetes is a system for managing containerized applications across a cluster of machines. It helps automate deployment, scaling, and operations of application containers.
+#Features: Container Orchestration, Scalability, Load Balancing, High Availability, Rollout and Rollback.
+> Master Node(control-plane): Manages the Kubernetes cluster, making global decisions and overseeing its overall state. It has components like the API server, scheduler,ETCD and controller-manager.
+> Worker Node(minions): Executes tasks assigned by the master node, such as running application containers, handling networking, and managing local storage. It has components like the kubelet, kube-proxy, container runtime and the pod.
+
+
+📌Terminologies:
+> Cluster: It is a group of nodes that work together to run applications packaged as containers.
+> Pod: It is a small unit where one or more containers work together. They share resources and are managed as a single entity.
+> ReplicaSet: It ensures a specified number of identical pods are running. It is part of Kubernetes workload resources and helps in scaling and maintaining pod instances.
+> Deployment: It manages ReplicaSets to provide declarative updates to pods and replica sets. It handles creating, updating, and deleting application instances smoothly, ensuring the desired state of the application is maintained.
+> Rollout: Updating or modifying an application's version or configuration.
+> Rollback: Reverting to a previous version or configuration of an application.
+> Service: It is a tool that ensures applications running in containers can reliably communicate with each other. It provides a stable way to access and connect to these applications, regardless of where they are located within the cluster.
+> Config File: It is a YAML file used to define and configure resources such as Pods, Deployments, Services, etc. It specifies the desired state of these resources in the Kubernetes cluster.
+> Config Map: It can hold key-value pairs, files, or entire configuration files.
+
+📌Components:
+#(MASTER NODE)
+> API Server: It provides a way to interact and manage the cluster.
+> Scheduler: It assigns workloads (like Pods) to nodes based on resource availability.
+> ETCD: It is a distributed key-value store used for storing cluster configuration and state.
+> Controller Manager: It manages controllers that regulate the state of the cluster.
+
+#(WORKER NODE)
+> Kubelet: It is the node agent that ensures containers are running in Pods as expected, handling their creation, deletion, and monitoring.
+> Kube-proxy: It handles network proxy and load balancing across application services.
+> Container Runtime: It is the software responsible for running containers, such as Docker or containerd.
+
+📌Minikube: It is a tool that enables you to run Kubernetes clusters locally on your machine for development and testing purposes.
+#Basic commands:
+.minikube start - Starts a local Kubernetes cluster using Minikube.
+.minikube stop - Stops the running Minikube cluster.
+.minikube status - Displays the status of the Minikube cluster, including IP address and health.
+.minikube delete - Deletes the Minikube cluster and stops the Minikube VM.
+.minikube dashboard - Opens the Kubernetes dashboard.
+.minikube ip - Retrieves the IP address of the Minikube cluster.
+.minikube ssh - Opens an SSH session into the Minikube VM.
+.minikube config view - Views the current Minikube configuration settings.
+
+📌Config yml file - we can create two separate config file for deployment and service or in a single(separated by ---) yaml file.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-deployment
+  labels:
+    app: my-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+        - name: my-app-container
+          image: nginx:latest 
+          ports:
+            - containerPort: 80
+          env:
+            - name: DB_HOST
+              value: mysql-service
+          volumeMounts:
+            - name: data-volume
+              mountPath: /data
+      volumes:
+        - name: data-volume
+          emptyDir: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-app-service
+spec:
+  selector:
+    app: my-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+      app: my-app
+  type: LoadBalancer
+
+📌Multicontainer app:
+1) Multiple container in single pod:
+Just add the container in the yml deployment section.
+2) Multiple container in multiple pods:
+Create separate yml file for each pod.
+
+📌ConfigMap: key-value store, dynamic variables(env var).
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-configmap
+data:
+    key1=value1
+    key2=value2
+
+📌Persistent volumes: It is a storage resource that ensures data persists beyond pod restarts or failures.
+
+#PersistentVolume (PV): Think of it as a reserved chunk of storage space within Kubernetes that applications can ask to use.
+(persistentvolume.yaml)
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: example-pv
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: /mnt/data
+
+#PersistentVolumeClaim (PVC): When an application needs storage, it makes a request (claim) for a specific amount and type of storage from the available chunks (PVs) in Kubernetes.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: example-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+
+📌Steps:
+Make changes -> build docker img -> push new img to docker hub -> update config. file -> apply latest img. in k8s -> start service.
+
+📌Kubernetes Commands:
+#Cluster Management:
+.kubectl cluster-info : Display endpoint information about the master and services in the cluster.
+.kubectl version : Display the Kubernetes version running on the client and server.
+.kubectl config view : Get the configuration of the cluster.
+.kubectl api-resources : List the API resources that are available.
+.kubectl api-versions : List the API versions that are available.
+.kubectl get all --all-namespaces : List everything across all namespaces.
+
+#Daemonsets:
+.kubectl get daemonset : List one or more daemonsets.
+.kubectl edit daemonset <daemonset_name> : Edit and update the definition of one or more daemonsets.
+.kubectl delete daemonset <daemonset_name> : Delete a daemonset.
+.kubectl create daemonset <daemonset_name> : Create a new daemonset.
+.kubectl rollout daemonset : Manage the rollout of a daemonset.
+.kubectl describe ds <daemonset_name> -n <namespace_name> : Display the detailed state of daemonsets within a namespace.
+
+#Deployments:
+.kubectl get deployment: List one or more deployments
+.kubectl describe deployment <deployment_name>: Display the detailed state of one or more deployments
+.kubectl edit deployment <deployment_name>: Edit and update the definition of one or more deployment on the server
+.kubectl create deployment <deployment_name>: Create a new deployment
+.kubectl delete deployment <deployment_name>: Delete deployments
+.kubectl rollout status deployment <deployment_name>: See the rollout status of a deployment
+
+#Events:
+.kubectl get events: List recent events for all resources in the system
+.kubectl get events --field-selector type=Warning: List Warnings only
+.kubectl get events --field-selector involvedObject.kind!=Pod: List events but exclude Pod events
+.kubectl get events --field-selector involvedObject.kind=Node,involvedObject.name=<node_name>: Pull events for a single node with a specific name
+.kubectl get events --field-selector type!=Normal: Filter out normal events from a list of events
+
+#Logs:
+.kubectl logs <pod_name>: Print the logs for a pod
+.kubectl logs --since=1h <pod_name>: Print the logs for the last hour for a pod
+.kubectl logs --tail=20 <pod_name>: Get the most recent 20 lines of logs
+.kubectl logs -f <service_name> [-c <$container>]: Get logs from a service and optionally select which container
+.kubectl logs -f <pod_name>: Print the logs for a pod and follow new logs
+.kubectl logs -c <container_name> <pod_name>: Print the logs for a container in a pod
+.kubectl logs <pod_name> > pod.log: Output the logs for a pod into a file named ‘pod.log’
+.kubectl logs --previous <pod_name>: View the logs for a previously failed pod
+
+#Manifest File:
+.kubectl apply -f manifest_file.yaml: Apply a configuration to an object by filename or stdin. Overrides the existing configuration.
+.kubectl create -f manifest_file.yaml: Create objects using a manifest file.
+.kubectl create -f ./dir: Create objects in all manifest files in a directory.
+.kubectl create -f ‘url’: Create objects from a URL.
+.kubectl delete -f manifest_file.yaml: Delete an object specified in a manifest file.
+
+#Namespace:
+.kubectl create namespace <namespace_name>: Create namespace <name>
+.kubectl get namespace <namespace_name>: List one or more namespaces
+.kubectl describe namespace <namespace_name>: Display the detailed state of one or more namespaces
+.kubectl delete namespace <namespace_name>: Delete a namespace
+.kubectl edit namespace <namespace_name>: Edit and update the definition of a namespace
+.kubectl top namespace <namespace_name>: Display Resource (CPU/Memory/Storage) usage for a namespace
+
+#Nodes:
+.kubectl taint node <node_name>: Update the taints on one or more nodes
+.kubectl get node: List one or more nodes
+.kubectl delete node <node_name>: Delete a node or multiple nodes
+.kubectl top node: Display Resource usage (CPU/Memory/Storage) for nodes
+.kubectl describe nodes | grep Allocated -A 5: Resource allocation per node
+.kubectl get pods -o wide | grep <node_name>: Pods running on a node
+.kubectl annotate node <node_name>: Annotate a node
+.kubectl cordon node <node_name>: Mark a node as unschedulable
+.kubectl uncordon node <node_name>: Mark node as schedulable
+.kubectl drain node <node_name>: Drain a node in preparation for maintenance
+.kubectl label node: Add or update the labels of one or more nodes
+
+#Pods:
+.kubectl get pod: List one or more pods
+.kubectl delete pod <pod_name>: Delete a pod
+.kubectl describe pod <pod_name>: Display the detailed state of a pod
+.kubectl create pod <pod_name>: Create a pod
+.kubectl exec <pod_name> -c <container_name> <command>: Execute a command against a container in a pod
+.kubectl exec -it <pod_name> /bin/sh: Get interactive shell on a single-container pod
+.kubectl top pod: Display Resource usage (CPU/Memory/Storage) for pods
+.kubectl annotate pod <pod_name> <annotation>: Add or update the annotations of a pod
+.kubectl label pod <pod_name>: Add or update the label of a pod
+
+#Replication Controller:
+.kubectl get rc: List the replication controllers
+.kubectl get rc --namespace=<namespace_name>: List the replication controllers by namespace
+
+#ReplicaSets:
+kubectl get replicasets: List ReplicaSets
+kubectl describe replicasets <replicaset_name>: Display the detailed state of one or more ReplicaSets
+kubectl scale --replicas=[x] <replicaset_name>: Scale a ReplicaSet
+
+#Secrets:
+.kubectl create secret: Create a secret
+.kubectl get secrets: List secrets
+.kubectl describe secrets: List details about secrets
+.kubectl delete secret <secret_name>: Delete a secret
+
+#Services:
+.kubectl get services: List one or more services
+.kubectl describe services: Display the detailed state of a service
+.kubectl expose deployment [deployment_name]: Expose a deployment as a new Kubernetes service
+.kubectl edit services: Edit and update the definition of one or more services
+
+#Service Account:
+.kubectl get serviceaccounts: List service accounts
+.kubectl describe serviceaccounts: Display the detailed state of one or more service accounts
+.kubectl replace serviceaccount: Replace a service account
+.kubectl delete serviceaccount <service_account_name>: Delete a service account
+
+#Statefulsets:
+.kubectl get statefulset: List StatefulSets
+.kubectl delete statefulset/<stateful_set_name> --cascade=false: Delete a StatefulSet only (not pods), without cascading deletion to dependent resources.
+
+#Common Options:
+.kubectl get pods -o wide: Output format. Lists all pods in ps output format with more information.
+.kubectl get pods --namespace=<namespace_name>: -n Shorthand for --namespace. Lists all pods in a specific namespace.
+.kubectl get pods -n <namespace_name>: Shorthand alternative to list pods in a specific namespace.
+.kubectl create -f ./newpod.json: -f Filename, directory, or URL to files to use to create a resource. Creates a pod using data in a file named newpod.json.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
