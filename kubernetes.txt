@@ -132,9 +132,6 @@ spec:
     requests:
       storage: 5Gi
 
-📌Steps:
-Make changes -> build docker img -> push new img to docker hub -> update config. file -> apply latest img. in k8s -> start service.
-
 📌Kubernetes Commands:
 #Cluster Management:
 .kubectl cluster-info : Display endpoint information about the master and services in the cluster.
@@ -254,6 +251,8 @@ kubectl scale --replicas=[x] <replicaset_name>: Scale a ReplicaSet
 .kubectl create -f ./newpod.json: -f Filename, directory, or URL to files to use to create a resource. Creates a pod using data in a file named newpod.json.
 
 
+📌Steps:
+Make changes -> build docker img -> push new img to docker hub -> update config. file -> apply latest img. in k8s -> start service.
 
 
 
