@@ -35,7 +35,7 @@
 .git branch --list  : List all local Branch
 .git branch -r  : List all remote branch
 .git branch -d branch_name  : Delete Branch
-.git push origin -delete branch_name  : Delete a remote Branch
+.git push origin --delete branch_name  : Delete a remote Branch
 .git branch -m <old branch name> <new branch name>  : Rename Branch
 .git checkout branch_name  : Switch to a particular branch
 .git checkout -b branch_name  : Create a new branch and switch to it
@@ -54,11 +54,11 @@
 .git cherry-pick commit_id  : Apply the changes introduced by some existing commit
 
 9. Merging
-.git merge branch_name  : Merge the branches
-.git merge commit_id  : Merge the specified commit to currently active branch
+.git merge branch_name  : Merge the branches (If there is any conflict -> resolve it and commit -> merge-conflict commit will appear on top of all the merge commits)
+.git merge --abort : to abort the merge
 
 10. Rebase
-.git rebase base_branch  : it allows you to apply commits on top of another branch (checkout to feature branch and do git rebase main to apply your commit on top of main branch)
+.git rebase base_branch  : It allow us to maintain linear commit history. (Base branch A -> you created branch B from A -> you did some changes & pushed in B -> Now before merging B to A someone pushed to A -> then you checkout to A take pull and again checkout to B and do git rebase A -> If there is conflict, solve it and add the file to staging area and do git rebase --continue -> After successful rebase do git push -f in B -> Now in B, all you commits will come on top of A's commits -> Now go to A and merge B)
 .git rebase --abort  : to abort the rebasing process
 .git rebase --continue  : Continue the rebasing process
 .git rebase --skip  : Skips the current commit and continue with other commits
@@ -73,8 +73,9 @@
 .git remote set-url remote_name <newURL>  : Change remote
 
 12. Pushing Updates
-.git push origin master  : Push data to remote server
-.git push remote_name branch_name  : push your branch to remote server
+.git push : if the branch is set to upstream then we can directly use this to push the changes.
+.git push remote_name(usually origin) branch_name  : push your branch to remote server. Use this if your branch is not set to upstream.
+.git push -u origin <branch-name> : This command pushes your local branch to the remote and sets the upstream reference so that in the future, you can simply use git push or git pull without specifying the remote or branch name.
 
 13. Pulling updates
 .git pull origin master  : Pull the data from the server  (git fetch + git merge)
