@@ -12,6 +12,7 @@
 .git add file_name  : add a file to staging area
 .git add .  : add all files to staging area
 .git reset file_name  : to remove file from staging area
+.git restore file_name : to undo all the changes from the file
 .git commit -m "commit_message"  : to commit changes
 
 4. Track changes
@@ -21,7 +22,6 @@
 .git diff commit1-sha commit2-sha  : Track the changes between two commits
 .git diff branch_1 branch_2  : Git Diff Branches
 .git status  : the state of the working directory and the staging area
-.git show <objects>  : Shows objects
 
 5. Commit History
 .git log  : Display the most recent commits and the status of the head
@@ -75,7 +75,7 @@
 12. Pushing Updates
 .git push : if the branch is set to upstream then we can directly use this to push the changes.
 .git push remote_name(usually origin) branch_name  : push your branch to remote server. Use this if your branch is not set to upstream.
-.git push -u origin <branch-name> : This command pushes your local branch to the remote and sets the upstream reference so that in the future, you can simply use git push or git pull without specifying the remote or branch name.
+.git push -u origin <branch-name> : This command pushes your local branch to the remote and sets the upstream reference so that in the future, you can simply use git push or git pull without specifying the remote or branch name
 
 13. Pulling updates
 .git pull origin master  : Pull the data from the server  (git fetch + git merge)
@@ -86,5 +86,5 @@
 
 14. Undo changes
 .git revert <commit-ish>  : Revert a particular commit
-.git reset --hard commit_id  : to go back to this commit and all the local changes will be removed.(DO Stash them)
-.git reset --soft commit_id  : to go back to this commit and the local changes will remain.
+.git reset --hard commit_id  : to go back to this commit and all the local changes will be removed(DO Stash them)
+.git reset --soft commit_id  : to go back to this commit and the local changes will remain
