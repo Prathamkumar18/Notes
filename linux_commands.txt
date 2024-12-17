@@ -49,8 +49,10 @@
 >gedit filename - to open text editor.
 
 >df - to check disk free space.
+>df -h - to displays disk space usage in an human-readable format.
 >du - to check disk usage statistics.
 >free - to check free ram space.
+>free -h - to displays memory usage in a human-readable format.
 >lscpu - to check cpu/core/thread info.
 >arch - to check architecture of your Linux server.
 >ip a/addr - to list the IP addresses associated with network interface.
