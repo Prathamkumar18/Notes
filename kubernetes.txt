@@ -209,6 +209,7 @@ spec:
 .kubectl create pod <pod_name>: Create a pod
 .kubectl exec <pod_name> -c <container_name> <command>: Execute a command against a container in a pod
 .kubectl exec -it <pod_name> /bin/sh: Get interactive shell on a single-container pod
+.kubectl exec -it <pod-name> -- /bin/bash: Execute a Command in a Running Pod
 .kubectl top pod: Display Resource usage (CPU/Memory/Storage) for pods
 .kubectl annotate pod <pod_name> <annotation>: Add or update the annotations of a pod
 .kubectl label pod <pod_name>: Add or update the label of a pod
@@ -223,6 +224,7 @@ kubectl describe replicasets <replicaset_name>: Display the detailed state of on
 kubectl scale --replicas=[x] <replicaset_name>: Scale a ReplicaSet
 
 #Secrets:
+.kubectl get configmap <name> -o yaml: View ConfigMap Contents
 .kubectl create secret: Create a secret
 .kubectl get secrets: List secrets
 .kubectl describe secrets: List details about secrets
@@ -249,6 +251,11 @@ kubectl scale --replicas=[x] <replicaset_name>: Scale a ReplicaSet
 .kubectl get pods --namespace=<namespace_name>: -n Shorthand for --namespace. Lists all pods in a specific namespace.
 .kubectl get pods -n <namespace_name>: Shorthand alternative to list pods in a specific namespace.
 .kubectl create -f ./newpod.json: -f Filename, directory, or URL to files to use to create a resource. Creates a pod using data in a file named newpod.json.
+
+#Persistent Storage:
+.kubectl get pv: List Persistent Volumes.
+.kubectl get pvc: List Persistent Volume Claims.  
+.kubectl get storageclass: View Storage Class
 
 
 📌Steps:
