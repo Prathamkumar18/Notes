@@ -1,17 +1,15 @@
 📌Docker Overview
-Docker enables applications to develop, ship, and run in isolated containers that share the same OS, unlike virtual machines. It solves key issues like:
+Docker is used in containerizing applications, making them easy to build, share, and run in isolated environments. It solves key issues like:
 
 Dependency Management: Addresses the "it works on my machine" problem.
-Code Migration: Simplifies app movement across environments.
-Scalability: Easily scales applications using containers.
-Portability: Containers run anywhere.
+Easy to Migrate code and is Scalable and Portable.
 Isolation: Containers run independently from each other.
 Resource Efficiency: Containers are more lightweight than VMs.
 
 📌Three parts-
 1)Runtime: to start and stop container.
- a)Runc- Low level container runtime to create and run containers.
- b)containerd- High level container runtime to manage the entire lifecycle of container like creating,running,deleting, and networking.
+ a)Runc- Low level container runtime - to create and run containers.
+ b)containerd- High level container runtime - to manage the entire lifecycle of container like creating,running,deleting, and networking.
 
 2)Engine:
  a)Docker Daemon-It listens the Docker API req. and manages lifecycle.
@@ -24,37 +22,38 @@ Resource Efficiency: Containers are more lightweight than VMs.
 .A .dockerignore file can be used to ignore files while creating imgs
 .Docker Hub registry is a cloud-based repository for Docker images. It is used for sharing and storing Docker images.
 .An image is a static, immutable blueprint for creating containers, while a container is a dynamic, running instance of an image. Images are used for building and sharing applications, while containers are used for running and managing applications.
-.Container is an isolated environment as we can multiple instance of an image in multiple ports.
+.Container is an isolated environment as we can have multiple instance of an image in multiple ports.
 .For random port use 0. It will help in solving the conflict of the port.
-.Docker Compose file is a YAML file that defines and runs multi-container Docker applications.(docker-compose.yaml)
+.Docker Compose file is a YAML file that defines and runs multi-container Docker applications.(docker-compose.yaml or docker-compose.yml)
 .A Dockerfile is used to build a single Docker image, whereas a Docker Compose file is used to define and run multiple Docker containers that interact with each other.
 .Files related to docker are stored in /var/lib/docker
 
 📌Docker Commands:
-.docker run img_name:version - to pull image and run
 .docker pull img_name:version - to pull image and not run
+.docker run img_name:version - to pull image and run
 .docker search keyword - search for Docker images on Docker Hub
 .docker ps - to list all running containers
 .docker ps -a -to list all containers
 .docker stop container_name - to stop the container
-.docker stop $(docker ps -a -q) - to stop all the containers
+.docker stop $(docker ps -aq) - to stop all the containers
 .docker rm container_name - to remove the container
-.docker rm $(docker ps -a -q) -to remove all the containers
+.docker rm $(docker ps -aq) -to remove all the containers
 .docker container pause <container_id> - to pause running container
 .docker container unpause <container_id> - to unpause container
 .docker images - to list all images
 .docker rmi img_name - to remove the image
-.docker rmi $(docker images -a -q) - to remove all the images
+.docker rmi $(docker images -aq) - to remove all the images
 .docker image history img_name - history of image.
 .docker run -d img_name - to run in detach mode (background)
 .docker attach img_name or img_id - to attach
-.docker run --name new_name old_name - to run container with new name
-.docker rename old_name new_name - to rename the container
-.docker run -it img_name - to run in interactive way (-it means interactive terminal)
-.docker run -d --rm -p <host_port>:<container_port> img_name - to run the container but when we use docker stop, it will also remove (--rm) the container.
+.docker run --name new_name img_name - to run container with new name
+.docker rename old_name new_name - to rename a running container
+.docker run -it img_name - to run in interactive way
+.docker run -d --rm img_name - to run the container but when we use docker stop, it will also remove (--rm) the container.
 .docker tag src_img:src_tag tar_img:targ_tag - to tag a Docker image with a specific name and version (to rename the image)
 .docker inspect container_name or container_id - to see details of container
-.docker run img_name cat /etc/*release* - to check the details of the image
+.docker image inspect img_name or img_id - to see details of image
+.docker run img_name cat /etc/*release* - to display the release information (e.g., OS version).
 .docker logs container_id or container_name - to see logs
 .docker run -p <host_port>:<container_port> image-name -(host_port -my & container_port - web server)eg.docker run -p 8080:3306 mysql (so we can run multiple instances by changing the host_port).
 .docker run -e key=value -e key=value img_name - env variable
@@ -77,18 +76,26 @@ Resource Efficiency: Containers are more lightweight than VMs.
 .docker system df - information about Docker's disk usage.
 .docker network ls - to list all network drivers.
 .docker network inspect network_name - to view detailed information about a specific network, such as connected containers, IP ranges, and driver type.
-.docker network create --driver driver_type --subnet=subnet --gateway=gateway ntw_name - to create a custom network. (driver type- host/none/bridge)
+.docker network create --driver=driver_type --subnet=subnet --gateway=gateway ntw_name - to create a custom network. (driver type- bridge/host/none)
 .docker network rm net_name - to remove network
 .docker network connect network_name container_name - to connect a Container to a Network.
 .docker network disconnect network_name container_name - to disconnect a Container from a Network.
 .docker network prune - to remove all unused Docker networks to free up resources.
 .docker events - to know about the various events
-.docker volume create volume_name - to create volume
 .docker volume ls - to list all Docker volumes.
 .docker volume inspect volume_name - Provides detailed information about a specific volume.
+.docker volume create volume_name - to create volume
 .docker volume rm volume_name - to delete a specific volume. The volume must not be in use by any container.
 .docker volume prune - to remove all unused volumes.
 .docker run -v volume_name:[container_path] image_name - to mount a volume into a container.
+
+
+📌
+.Use - for short options (single-character flags): -p (port mapping), -d (detached mode), -it (interactive and tty-Teletypewriter), -e (environment variable), -v (volume mapping)
+.Use -- for long options (more descriptive, multi-character flags): --name (set container name), --rm (auto-remove container when stopped), --network (define network mode), --env (set environment variables), --publish (port mapping, same as -p)
+
+📌
+-a (all), ps (process status), -e (environment), -v (volume), df (disk free), -d (detached), -it (interactive terminal), -p (publish), --rm (remove), -t (tag), -q (quiet), -i (interactive), --env (environment), --stats (statistics)
 
 📌Dockerfile example for nodejs app:
 FROM base_img         	[Image_name:version]
@@ -109,7 +116,7 @@ CMD ["node","main.js"]
 version: "3.8"   //version of docker-compose format
 
 services:
-  postgres:      //container name      
+  my-postgres:      //container name(anything) 
     image: postgres 
     ports:
       - "5432:5432"
@@ -120,20 +127,20 @@ services:
     volumes:
       - .:/app
 
-  redis:
+  my-redis:
     image: redis
     ports:
       - "6379:6379"
 
-📌Docker Networking: docker network ls
+📌Docker Networking: Helps containers talk to each other.
 . Docker has 3 network drivers:
 -> Bridge- This is the default network that Docker uses when you create a new container.It allows to access ext. n/w. Hence it requires port mapping.
 -> Host- (docker run -it --network=host container_name)- Here the container_n/w gets connected to host_n/w. Hence it doesn't req. port mapping.
 -> None- (docker run -it --network=none container_name)- Here the container will not have internet connection.
 
-📌Docker volumes:(dataBackUp and real time changes)
-.In docker the data associated with every container is temporary. so when the container is deleted the data also gets deleted. It can also be used to make real time changes.
-step1: Update the docker file and include nodemon
+📌Docker volumes: Stores data for containers.
+.In docker the data associated with every container is temporary. so when the container is deleted, the data also gets deleted. 
+step1: Update the docker file
 FROM node:latest
 RUN npm install -g nodemon
 WORKDIR /app
@@ -142,12 +149,12 @@ RUN npm install
 EXPOSE 8000
 CMD [ "nodemon","main.js"]
 step2:Now build the docker image using docker build -t img_name .
-step3:Now use docker run --name container_name -p host_port:cont_port --rm -v src_path:dest_path img_name   [Mounts a volume by mapping a directory on the host (src_path) to a directory inside the container (dest_path). This is useful for persisting data or sharing files between the host and container]
+step3:Now use docker run --name container_name -p host_port:container_port --rm -v src_path:dest_path img_name   [Mounts a volume by mapping a directory on the host (src_path) to a directory inside the container (dest_path). This is useful for persisting data or sharing files between the host and container]
 
 ❓Que- Create a docker network as my-network of driver type- host and then deploy the mysql image named as mysql-demo with 2 env variables- db_name:user and db_password:pass123 and expose the port 8080 to 8000 as host , then add this image to the network my-network and also add volume from /ops to /var/lib/mysql.
 Ans-
 -> docker network create --driver=host my-network
--> docker run -d --name mysql-demo -e db_name=user -e db_password=pass123 -p 8000:8080 --network=my-network --rm -v /ops:/var/lib/mysql mysql
+-> docker run -d --name mysql-demo -e db_name=user -e db_password=pass123 -p 8000:8080 --network=my-network -v /ops:/var/lib/mysql mysql
 
 ❓Que- Let’s say you have created a Spring Boot application that needs to use a MySQL database. How would you set it up?
 Ans-
@@ -167,7 +174,7 @@ EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "spring-app.jar"]
 Step 4: Run your Spring Boot application in a container and in appln.prop. use spring.datasource.url=jdbc:mysql://mysql-container:3306/userInfo
 .docker build -t spring-app .
-.docker run -it --rm --name spring-app-container --network my_network spring-app
+.docker run -it --rm --name spring-app-container --network=my_network spring-app
 
 The data in the mysql will remain even after stopping and starting the container. It will get removed only when container of mysql is removed.
 
@@ -192,7 +199,7 @@ services:
     restart: always
 
   spring-app:
-    build: .       [It will build the image using dockerFile]
+    build: .       [It will build the image using dockerFile, so give path of dockerFile]
     container_name: spring-app-container
     networks:
       - my_network
